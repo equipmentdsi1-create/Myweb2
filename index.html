@@ -4,52 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <link rel="stylesheet" href="Login.css">
 </head>
 <body>
-  <!-- Video Background -->
-  <video autoplay muted loop id="bg-video">
-    <source src="Loginpagebackground.mp4" type="video/mp4">
-  </video>
+ <video autoplay muted loop id="bg-video">
+     <source src="Loginpagebackground.mp4" type="video/mp4">
+ </video>
 
-  <!-- Background Music -->
-  <audio id="bg-music" preload="auto" loop>
+ <audio id="bg-music" preload="auto" loop>
     <source src="Loginpagemusic.mp3" type="audio/mpeg">
-  </audio>
+ </audio>
 
-  <!-- Music Toggle Button -->
-  <button onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
-
-  <!-- Login Container -->
-  <div class="container">
+<div class="container">
     <h1>Welcome BB 💕</h1>
     <p>Please enter your username:</p>
-    <input type="text" id="username" placeholder="Enter your Name">
+    <input type="username" id="username" placeholder="Enter your Name">
     <p>Please enter the secret password to continue:</p>
     <input type="password" id="password" placeholder="Enter password">
     <p>Tips : Password will be revealed 12 hrs before the date</p>
     <br>
+    <br>
+    <button onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
     <button onclick="checkPassword()">Login</button>
     <p id="error" class="error"></p>
   </div>
 
-  <script>
+<script>
     const music = document.getElementById("bg-music");
     const musicBtn = document.getElementById("musicBtn");
     let isPlaying = false;
 
     function toggleMusic() {
       if (!isPlaying) {
-        let playPromise = music.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => {
-            musicBtn.textContent = "⏸ Pause Music";
-            isPlaying = true;
-          }).catch(err => {
-            console.log("Playback prevented:", err);
-            alert("Please tap the button again to start the music 🎵");
-          });
-        }
-      } else {
+        music.play();
+        musicBtn.textContent = "⏸ Pause Music";
+        isPlaying = true;
+      }).catch(err => {
+      console.log("Playback prevented:", err);
+      alert("Please tap again to start the music 🎵");
+      });
+     } else {
         music.pause();
         musicBtn.textContent = "🎵 Play Music";
         isPlaying = false;
@@ -66,8 +60,9 @@
         errorMsg.textContent = "Please enter your username";
         return;
       }
-
       if (password === correctPassword) {
+        }
+        // Redirect to the invitation page
         window.location.href = "invitation.html";
       } else {
         errorMsg.textContent = "Incorrect password. Try again!";
@@ -76,4 +71,3 @@
   </script>
 </body>
 </html>
-
