@@ -5,14 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <style>
-    body, html {
+    /* Reset + background */
+    html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
       height: 100%;
+      overflow: hidden;
       font-family: Arial, sans-serif;
+      background: black;
     }
 
-    /* Background video */
+    /* Fullscreen video background */
     #bg-video {
       position: fixed;
       top: 0;
@@ -21,55 +25,85 @@
       height: 100%;
       object-fit: cover;
       z-index: -1;
-      pointer-events: none; /* make sure video never blocks clicks */
+      pointer-events: none;
     }
 
     /* Center container */
     .container {
-      position: relative;
-      z-index: 1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       max-width: 400px;
-      margin: 100px auto;
-      padding: 20px;
+      width: 90%;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 30px;
+      border-radius: 12px;
       text-align: center;
-      background: rgba(0,0,0,0.5);
-      border-radius: 10px;
       color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      color: #ff4d6d;
     }
 
     input {
-      display: block;
       width: 90%;
-      margin: 10px auto;
-      padding: 8px;
-      border-radius: 5px;
+      padding: 10px;
+      margin: 10px 0;
       border: none;
-    }
-
-    button {
-      margin: 8px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      border-radius: 6px;
       font-size: 16px;
     }
 
+    button {
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      background: #ff4d6d;
+      color: white;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #ff3355;
+    }
+
     .error {
-      color: #ff8080;
-      font-weight: bold;
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    /* Music button in corner */
+    #musicBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      background: #ff4d6d;
     }
   </style>
 </head>
 <body>
+  <!-- Video Background -->
   <video autoplay muted loop id="bg-video">
     <source src="Loginpagebackground.mp4" type="video/mp4">
   </video>
 
+  <!-- Background Music -->
   <audio id="bg-music" preload="auto" loop>
     <source src="Loginpagemusic.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- Music Toggle Button -->
+  <button onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
+
+  <!-- Login Container -->
   <div class="container">
     <h1>Welcome BB 💕</h1>
     <p>Please enter your username:</p>
@@ -78,36 +112,31 @@
     <input type="password" id="password" placeholder="Enter password">
     <p>Tips : Password will be revealed 12 hrs before the date</p>
     <br>
-    <button id="musicBtn">🎵 Play Music</button>
-    <button id="loginBtn">Login</button>
+    <button onclick="checkPassword()">Login</button>
     <p id="error" class="error"></p>
   </div>
 
   <script>
     const music = document.getElementById("bg-music");
     const musicBtn = document.getElementById("musicBtn");
-    const loginBtn = document.getElementById("loginBtn");
-    const errorMsg = document.getElementById("error");
-
-    // Sync UI with play/pause
-    music.addEventListener('play', () => {
-      musicBtn.textContent = "⏸ Pause Music";
-    });
-    music.addEventListener('pause', () => {
-      musicBtn.textContent = "🎵 Play Music";
-    });
+    let isPlaying = false;
 
     function toggleMusic() {
-      if (music.paused) {
-        const p = music.play();
-        if (p && typeof p.then === "function") {
-          p.catch(err => {
+      if (!isPlaying) {
+        let playPromise = music.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            musicBtn.textContent = "⏸ Pause Music";
+            isPlaying = true;
+          }).catch(err => {
             console.log("Playback prevented:", err);
-            alert("Please click the button again to start the music 🎵");
+            alert("Please tap the button again to start the music 🎵");
           });
         }
       } else {
         music.pause();
+        musicBtn.textContent = "🎵 Play Music";
+        isPlaying = false;
       }
     }
 
@@ -115,6 +144,7 @@
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value;
       const correctPassword = "bayx2202";
+      const errorMsg = document.getElementById("error");
 
       if (username === "") {
         errorMsg.textContent = "Please enter your username";
@@ -127,10 +157,6 @@
         errorMsg.textContent = "Incorrect password. Try again!";
       }
     }
-
-    // Attach listeners instead of inline onclick
-    musicBtn.addEventListener("click", toggleMusic);
-    loginBtn.addEventListener("click", checkPassword);
   </script>
 </body>
 </html>
