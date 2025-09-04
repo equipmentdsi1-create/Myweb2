@@ -11,7 +11,7 @@
      <source src="Loginpagebackground.mp4" type="video/mp4">
  </video>
 
- <audio id="bg-music" loop>
+ <audio id="bg-music" preload="auto" loop>
     <source src="Loginpagemusic.mp3" type="audio/mpeg">
  </audio>
 
@@ -39,7 +39,11 @@
         music.play();
         musicBtn.textContent = "⏸ Pause Music";
         isPlaying = true;
-      } else {
+      }).catch(err => {
+      console.log("Playback prevented:", err);
+      alert("Please tap again to start the music 🎵");
+      });
+     } else {
         music.pause();
         musicBtn.textContent = "🎵 Play Music";
         isPlaying = false;
