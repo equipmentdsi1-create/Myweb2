@@ -9,7 +9,8 @@
     /* Background video style */
     #bg-video {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -17,12 +18,17 @@
       pointer-events: none;     /* prevent it from blocking clicks */
     }
 
-    /* Container always above video */
+    /* Container above video */
     .container {
       position: relative;
-      z-index: 1;
+      z-index: 1000;           /* make sure it's way above */
       text-align: center;
       color: white;
+      background: rgba(0,0,0,0.4); /* translucent background for readability */
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: 100px auto;
     }
 
     button {
@@ -60,16 +66,12 @@
 <script>
   const music = document.getElementById("bg-music");
   const musicBtn = document.getElementById("musicBtn");
-  let isPlaying = false;
 
-  // Keep button text in sync with actual music state
+  // Sync UI with play/pause
   music.addEventListener('play', () => {
-    isPlaying = true;
     musicBtn.textContent = "⏸ Pause Music";
   });
-
   music.addEventListener('pause', () => {
-    isPlaying = false;
     musicBtn.textContent = "🎵 Play Music";
   });
 
@@ -79,15 +81,11 @@
       if (p && typeof p.then === "function") {
         p.catch(err => {
           console.log("Playback prevented:", err);
-          alert("Please tap again to start the music 🎵");
+          alert("Please click the button again to start the music 🎵");
         });
-      } else {
-        isPlaying = true;
-        musicBtn.textContent = "⏸ Pause Music";
       }
     } else {
       music.pause();
-      // button text will update via pause event
     }
   }
 
