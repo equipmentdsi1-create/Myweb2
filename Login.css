@@ -1,140 +1,100 @@
+:root {
+  --pink: #ff4d6d;
+  --pink-dark: #ff3355;
+}
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Poppins", sans-serif;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   overflow: hidden;
 }
 
+/* Background video */
 #bg-video {
   position: fixed;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  z-index: -1; 
+  z-index: -1;
 }
 
-/* Improved video centering */
-#bg-video {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: cover;
-  transform: translate(-50%, -50%);
-  z-index: -1;
+/* Login card */
+.container {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: min(92vw, 360px);
+}
+
+h1 {
+  margin: 0 0 .5rem;
+  font-size: 1.9rem;
+  color: var(--pink);
+}
+p {
+  margin: .25rem 0;
+  color: #444;
+}
+
+.field {
+  margin: .6rem 0;
+  display: grid;
+  gap: .4rem;
+}
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid var(--pink);
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.actions {
+  margin-top: 1rem;
+  display: grid;
+  gap: .6rem;
+}
+button {
+  background: var(--pink);
+  color: #fff;
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease;
+}
+button:hover {
+  background: var(--pink-dark);
+  transform: scale(1.03);
 }
 
 #musicBtn {
   position: fixed;
   top: 20px;
   right: 20px;
-  background: #ff4d6d;
-  color: white;
-  border: none;
-  padding: 10px 20px;  
-  border-radius: 10px; 
-  cursor: pointer;
-  font-size: 1rem;     
-  z-index: 10;
-  transition: 0.3s;
-}
-
-#musicBtn:hover {
-  background: #ff3355;
-  transform: scale(1.05);
-}
-
-/* Login box */
-.container {
-  background: rgba(255, 255, 255, 0.85);
-  padding: 2rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  text-align: center;
-  max-width: 300px;
-  width: 90%;
-}
-
-h1 {
-  font-size: 2rem;
-  color: #ff4d6d;
-}
-
-p {
-  color: #444;
-}
-
-input {
-  display: block;
-  margin:0.5rem auto;
-  padding: 10px;
-  border: 2px solid #ff4d6d;
-  border-radius: 10px;
-  outline: none;
-  width: 80%;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-button {
-  background: #ff4d6d;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #ff3355;
-  transform: scale(1.05);
+  z-index: 2;
 }
 
 .error {
-  margin-top: 10px;
-  color: red;
-  font-weight: bold;
+  min-height: 1.2em;
+  margin-top: .5rem;
+  color: #d21e1e;
+  font-weight: 600;
 }
 
-button {
-  background: #ff4d6d;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-/* For smaller screens */
 @media (max-width: 600px) {
-  .container {
-    max-width: 90%;   /* shrink width on phones */
-    padding: 1.5rem;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  input, button {
-    font-size: 0.9rem;
-    padding: 8px;
-  }
+  .container { padding: 1.5rem; }
+  h1 { font-size: 1.6rem; }
+  input, button { font-size: .95rem; }
 }
-
-#musicBtn {
-  pointer-events: auto;
-}
-
