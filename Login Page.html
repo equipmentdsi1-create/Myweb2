@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+ <video autoplay muted loop id="bg-video">
+     <source src="Loginpagebackground.mp4" type="video/mp4">
+ </video>
+
+ <audio id="bg-music" loop>
+    <source src="Loginpagemusic.mp3" type="audio/mpeg">
+ </audio>
+
+<div class="container">
+    <h1>Welcome BB 💕</h1>
+    <p>Please enter your username:</p>
+    <input type="username" id="username" placeholder="Enter your Name">
+    <p>Please enter the secret password to continue:</p>
+    <input type="password" id="password" placeholder="Enter password">
+    <p>Tips : Password will be revealed 12 hrs before the date</p>
+    <br>
+    <br>
+<button onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
+    <button onclick="checkPassword()">Login</button>
+    <p id="error" class="error"></p>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const correctPassword = "bayx2202";
+      const errorMsg = document.getElementById("error");
+
+      if (username === "") {
+        errorMsg.textContent = "Please enter your username";
+	return
+      }
+
+      if (password === correctPassword) {
+        window.location.href = "invitation.html";
+      } else {
+        errorMsg.textContent = "Incorrect password. Try again!";
+
+const music = document.getElementById("bg-music");
+  const musicBtn = document.getElementById("musicBtn");
+  let isPlaying = false;
+
+  function toggleMusic() {
+    if (!isPlaying) {
+      music.play();
+      musicBtn.textContent = "⏸ Pause Music";
+      isPlaying = true;
+    } else {
+      music.pause();
+      musicBtn.textContent = "🎵 Play Music";
+      isPlaying = false;
+    }
+  }
+  </script>
+</body>
+</html>
