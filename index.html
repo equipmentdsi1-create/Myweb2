@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="Login.css">
+  <style>
+    /* Background video style */
+    #bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;              /* push behind everything */
+      pointer-events: none;     /* prevent it from blocking clicks */
+    }
+
+    /* Container always above video */
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: white;
+    }
+
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
  <video autoplay muted loop id="bg-video">
@@ -33,24 +62,32 @@
   const musicBtn = document.getElementById("musicBtn");
   let isPlaying = false;
 
-  function toggleMusic() {
-    if (!isPlaying) {
-      let playPromise = music.play();
+  // Keep button text in sync with actual music state
+  music.addEventListener('play', () => {
+    isPlaying = true;
+    musicBtn.textContent = "⏸ Pause Music";
+  });
 
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          musicBtn.textContent = "⏸ Pause Music";
-          isPlaying = true;
-        }).catch(err => {
+  music.addEventListener('pause', () => {
+    isPlaying = false;
+    musicBtn.textContent = "🎵 Play Music";
+  });
+
+  function toggleMusic() {
+    if (music.paused) {
+      const p = music.play();
+      if (p && typeof p.then === "function") {
+        p.catch(err => {
           console.log("Playback prevented:", err);
-          alert("Please tap the button again to start the music 🎵");
+          alert("Please tap again to start the music 🎵");
         });
+      } else {
+        isPlaying = true;
+        musicBtn.textContent = "⏸ Pause Music";
       }
     } else {
       music.pause();
-      musicBtn.textContent = "🎵 Play Music";
-      isPlaying = false;
-
+      // button text will update via pause event
     }
   }
 
@@ -66,7 +103,6 @@
     }
 
     if (password === correctPassword) {
-      // Redirect to the invitation page
       window.location.href = "invitation.html";
     } else {
       errorMsg.textContent = "Incorrect password. Try again!";
@@ -75,4 +111,3 @@
 </script>
 </body>
 </html>
-
