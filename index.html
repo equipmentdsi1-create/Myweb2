@@ -35,19 +35,22 @@
 
   function toggleMusic() {
     if (!isPlaying) {
-      music.play()
-        .then(() => {
+      let playPromise = music.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
           musicBtn.textContent = "⏸ Pause Music";
           isPlaying = true;
-        })
-        .catch(err => {
+        }).catch(err => {
           console.log("Playback prevented:", err);
-          alert("Please tap again to start the music 🎵");
+          alert("Please tap the button again to start the music 🎵");
         });
+      }
     } else {
       music.pause();
       musicBtn.textContent = "🎵 Play Music";
       isPlaying = false;
+
     }
   }
 
@@ -72,3 +75,4 @@
 </script>
 </body>
 </html>
+
