@@ -24,12 +24,28 @@
     <p>Tips : Password will be revealed 12 hrs before the date</p>
     <br>
     <br>
-<button onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
+    <button onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
     <button onclick="checkPassword()">Login</button>
     <p id="error" class="error"></p>
   </div>
 
-  <script>
+<script>
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("musicBtn");
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (!isPlaying) {
+        music.play();
+        musicBtn.textContent = "⏸ Pause Music";
+        isPlaying = true;
+      } else {
+        music.pause();
+        musicBtn.textContent = "🎵 Play Music";
+        isPlaying = false;
+      }
+    }
+
     function checkPassword() {
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value;
@@ -38,29 +54,22 @@
 
       if (username === "") {
         errorMsg.textContent = "Please enter your username";
-	return
+        return;
       }
 
       if (password === correctPassword) {
+        // Start music automatically after login
+        if (!isPlaying) {
+          music.play();
+          musicBtn.textContent = "⏸ Pause Music";
+          isPlaying = true;
+        }
+        // Redirect to the invitation page
         window.location.href = "invitation.html";
       } else {
         errorMsg.textContent = "Incorrect password. Try again!";
-
-const music = document.getElementById("bg-music");
-  const musicBtn = document.getElementById("musicBtn");
-  let isPlaying = false;
-
-  function toggleMusic() {
-    if (!isPlaying) {
-      music.play();
-      musicBtn.textContent = "⏸ Pause Music";
-      isPlaying = true;
-    } else {
-      music.pause();
-      musicBtn.textContent = "🎵 Play Music";
-      isPlaying = false;
+      }
     }
-  }
   </script>
 </body>
 </html>
