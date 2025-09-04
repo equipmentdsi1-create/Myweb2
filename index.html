@@ -56,13 +56,7 @@
         errorMsg.textContent = "Please enter your username";
         return;
       }
-
       if (password === correctPassword) {
-        // Start music automatically after login
-        if (!isPlaying) {
-          music.play();
-          musicBtn.textContent = "⏸ Pause Music";
-          isPlaying = true;
         }
         // Redirect to the invitation page
         window.location.href = "invitation.html";
