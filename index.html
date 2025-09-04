@@ -18,56 +18,54 @@
 <div class="container">
     <h1>Welcome BB 💕</h1>
     <p>Please enter your username:</p>
-    <input type="username" id="username" placeholder="Enter your Name">
+    <input type="text" id="username" placeholder="Enter your Name">
     <p>Please enter the secret password to continue:</p>
     <input type="password" id="password" placeholder="Enter password">
     <p>Tips : Password will be revealed 12 hrs before the date</p>
-    <br>
-    <br>
+    <br><br>
     <button onclick="toggleMusic()" id="musicBtn">🎵 Play Music</button>
     <button onclick="checkPassword()">Login</button>
     <p id="error" class="error"></p>
   </div>
 
 <script>
-    const music = document.getElementById("bg-music");
-    const musicBtn = document.getElementById("musicBtn");
-    let isPlaying = false;
+  const music = document.getElementById("bg-music");
+  const musicBtn = document.getElementById("musicBtn");
+  let isPlaying = false;
 
-    function toggleMusic() {
-      if (!isPlaying) {
-        music.play();
+  function toggleMusic() {
+    if (!isPlaying) {
+      music.play().then(() => {
         musicBtn.textContent = "⏸ Pause Music";
         isPlaying = true;
       }).catch(err => {
-      console.log("Playback prevented:", err);
-      alert("Please tap again to start the music 🎵");
+        console.log("Playback prevented:", err);
+        alert("Please tap again to start the music 🎵");
       });
-     } else {
-        music.pause();
-        musicBtn.textContent = "🎵 Play Music";
-        isPlaying = false;
-      }
+    } else {
+      music.pause();
+      musicBtn.textContent = "🎵 Play Music";
+      isPlaying = false;
     }
+  }
 
-    function checkPassword() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value;
-      const correctPassword = "bayx2202";
-      const errorMsg = document.getElementById("error");
+  function checkPassword() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const correctPassword = "bayx2202";
+    const errorMsg = document.getElementById("error");
 
-      if (username === "") {
-        errorMsg.textContent = "Please enter your username";
-        return;
-      }
-      if (password === correctPassword) {
-        }
-        // Redirect to the invitation page
-        window.location.href = "invitation.html";
-      } else {
-        errorMsg.textContent = "Incorrect password. Try again!";
-      }
+    if (username === "") {
+      errorMsg.textContent = "Please enter your username";
+      return;
     }
-  </script>
+    if (password === correctPassword) {
+      // Redirect to the invitation page
+      window.location.href = "invitation.html";
+    } else {
+      errorMsg.textContent = "Incorrect password. Try again!";
+    }
+  }
+</script>
 </body>
 </html>
